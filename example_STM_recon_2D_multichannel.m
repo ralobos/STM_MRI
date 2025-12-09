@@ -29,7 +29,7 @@ clc;
 
 %% Loading data
 
-load('2D_mc_cardiac.mat');
+load('./data/2D_mc_cardiac.mat');
 
 % idata_gt    - ground truth data
 % idata_gt_sc - ground truth single-coil data obtained using a SENSE
