@@ -20,12 +20,12 @@ function [ST_maps, eigenVal] = nullspace_vectors_G_matrix_2D(kCal, N1, N2, L, G,
 %   --patchSize:    Number of elements in the kernel used to calculate the
 %                   nullspace vectors of the C matrix.
 %
-%   --PowerIteration_G_nullspace_vectors: Binary variable. 0 = nullspace
+%   --OrthogonalIteration_G_nullspace_vectors: Binary variable. 0 = nullspace
 %                   vectors of the G matrices are calculated using SVD.
 %                   1 = nullspace vectors of the G matrices are calculated
-%                   using the Power Iteration approach. Default: 1.
+%                   using the Orthogonal Iteration approach. Default: 1.
 %
-%   --M:            Number of iterations used in the Power Iteration approach
+%   --M:            Number of iterations used in the Orthogonal Iteration approach
 %                   to calculate the nullspace vectors of the G matrices.
 %                   Default: 30.
 %
@@ -61,7 +61,7 @@ p.addRequired('N2', @(x) isnumeric(x) && isscalar(x));
 p.addRequired('G', @(x) isnumeric(x) && ndims(x) == 4);
 p.addRequired('patchSize', @(x) isnumeric(x) && isscalar(x));
 p.addRequired('L', @(x) isnumeric(x) && isscalar(x));
-p.addParameter('PowerIteration_G_nullspace_vectors', 1, @(x) isnumeric(x) && isscalar(x));
+p.addParameter('OrthogonalIteration_G_nullspace_vectors', 1, @(x) isnumeric(x) && isscalar(x));
 p.addParameter('M', 30, @(x) isnumeric(x) && isscalar(x));
 p.addParameter('FFT_interpolation', 1, @(x) isnumeric(x) && isscalar(x));
 p.addParameter('gauss_win_param', 100, @(x) isnumeric(x) && isscalar(x));
@@ -81,7 +81,7 @@ M = p.Results.M;
 
 G = reshape(permute(p.Results.G, [3 4 1 2]), [Nc Nc (N1_g * N2_g)]);
 
-if p.Results.PowerIteration_G_nullspace_vectors == 0
+if p.Results.OrthogonalIteration_G_nullspace_vectors == 0
     [~, eigenVal, Vpage] = pagesvd(G, 'econ', 'vector');
     eigenVal = reshape(permute(eigenVal, [3 1 2]), [N1_g, N2_g, Nc]);
     ST_maps = reshape(permute(Vpage(:,Nc-L+1:Nc,:), [3 1 2]), [N1_g N2_g Nc L]);

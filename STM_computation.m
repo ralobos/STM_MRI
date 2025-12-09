@@ -29,23 +29,14 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
     %                                      1 = nullspace vectors of C are calculated from C'*C 
     %                                      directly using an FFT-based approach. Default: 1.
     %
-    %   --PowerIteration_G_nullspace_vectors: Binary variable. 0 = nullspace 
+    %   --OrthogonalIteration_G_nullspace_vectors: Binary variable. 0 = nullspace 
     %                                         vectors of the G matrices are calculated using SVD. 
     %                                         1 = nullspace vectors of the G matrices are calculated 
-    %                                         using a Power Iteration approach. Default: 1.
+    %                                         using a Orthogonal Iteration approach. Default: 1.
     %
-    %   --M:                               Number of iterations used in the Power Iteration approach 
+    %   --M:                               Number of iterations used in the Orthogonal Iteration approach 
     %                                      to calculate the nullspace vectors of the G matrices. 
     %                                      Default: 30.
-    %
-    %   --PowerIteration_flag_convergence: Binary variable. 1 = display a 
-    %                                      convergence error for Power Iteration if the method has 
-    %                                      not converged for some voxels after the specified 
-    %                                      iterations. Default: 1.
-    %
-    %   --PowerIteration_flag_auto:        Binary variable. 1 = Power Iteration is run 
-    %                                      until convergence if the number of iterations is too 
-    %                                      small. Default: 0.
     %
     %   --FFT_interpolation:               Binary variable. 0 = no interpolation. 1 = 
     %                                      FFT-based interpolation is used. Default: 1.
@@ -106,7 +97,7 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
     addParameter(p, 'threshold', 0.05, @(x) isnumeric(x) && isscalar(x));
     addParameter(p, 'kernel_shape', 1, @(x) isnumeric(x) && isscalar(x));
     addParameter(p, 'FFT_nullspace_C_calculation', 1, @(x) isnumeric(x) && isscalar(x));
-    addParameter(p, 'PowerIteration_G_nullspace_vectors', 1, @(x) isnumeric(x) && isscalar(x));
+    addParameter(p, 'OrthogonalIteration_G_nullspace_vectors', 1, @(x) isnumeric(x) && isscalar(x));
     addParameter(p, 'M', 30, @(x) isnumeric(x) && isscalar(x));
     addParameter(p, 'FFT_interpolation', 1, @(x) isnumeric(x) && isscalar(x));
     addParameter(p, 'interp_zp', 24, @(x) isnumeric(x) && isscalar(x));
@@ -141,10 +132,10 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
             FFT_interpolation_q = 'Yes';
         end
 
-        if p.Results.PowerIteration_G_nullspace_vectors == 0
-            PowerIteration_nullspace_vectors_q = 'No';
+        if p.Results.OrthogonalIteration_G_nullspace_vectors == 0
+            OrthogonalIteration_nullspace_vectors_q = 'No';
         else
-            PowerIteration_nullspace_vectors_q = 'Yes';
+            OrthogonalIteration_nullspace_vectors_q = 'Yes';
         end
 
         if p.Results.sketched_SVD == 0
@@ -159,7 +150,7 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
         disp(['FFT-based calculation of nullspace vectors of C : ' FFT_nullspace_C_calculation_q])
         disp(['Sketched SVD for nullspace vectors of C : ' sketched_SVD_q])
         disp(['FFT-based interpolation : ' FFT_interpolation_q])
-        disp(['PowerIteration-based nullspace estimation for G matrices : ' PowerIteration_nullspace_vectors_q])
+        disp(['OrthogonalIteration-based nullspace estimation for G matrices : ' OrthogonalIteration_nullspace_vectors_q])
         disp('=======================')
     end
 
@@ -245,7 +236,7 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
     t_null_G = tic;
 
     opts_G_nullspace_vectors = struct( ...
-        'PowerIteration_G_nullspace_vectors', p.Results.PowerIteration_G_nullspace_vectors, ...
+        'OrthogonalIteration_G_nullspace_vectors', p.Results.OrthogonalIteration_G_nullspace_vectors, ...
         'M',                                  p.Results.M, ...
         'FFT_interpolation',                  p.Results.FFT_interpolation, ...
         'gauss_win_param',                    p.Results.gauss_win_param, ...
@@ -266,10 +257,10 @@ function [ST_maps, eigenValues] = STM_computation(kCal, dim_sens, L, varargin)
     clear G
 
     if p.Results.verbose == 1
-        if p.Results.PowerIteration_G_nullspace_vectors == 0
+        if p.Results.OrthogonalIteration_G_nullspace_vectors == 0
             aux_word = 'Using SVD';
         else
-            aux_word = 'Using Power Iteration';
+            aux_word = 'Using Orthogonal Iteration';
         end
 
         disp(['Time nullspace vector G matrices (' aux_word ') : ' num2str(t_null_G)])

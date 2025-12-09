@@ -146,7 +146,7 @@ tau      = 3;                         % Kernel radius. Default: 3
 threshold = 0.08;                     % Threshold for C-matrix singular values. Default: 0.05
                                       % Note: In this example we don't use the default value.
 
-M = 20;                               % Number of iterations for Power Iteration. Default: 30
+M = 20;                               % Number of iterations for Orthogonal Iteration. Default: 30
                                       % Note: In this example we use a smaller value
                                       % to speed up the calculations.
 
@@ -186,7 +186,7 @@ sketched_SVD = 1;                     % Binary variable. 1 = sketched SVD is use
                                       % calculating the nullspace vectors directly and then the 
                                       % basis). Default: 1
 
-PowerIteration_G_nullspace_vectors = 1; % Binary variable. 1 = Power Iteration approach is 
+OrthogonalIteration_G_nullspace_vectors = 1; % Binary variable. 1 = Orthogonal Iteration approach is 
                                         % used to find nullspace vectors of the G matrices 
                                         % (instead of using SVD). Default: 1
 
@@ -214,7 +214,7 @@ t_stm = tic;
     'threshold', threshold, ...
     'kernel_shape', kernel_shape, ...            % Kernel and threshold parameters
     'FFT_nullspace_C_calculation', FFT_nullspace_C_calculation, ...             % FFT nullspace calculation flag
-    'PowerIteration_G_nullspace_vectors', PowerIteration_G_nullspace_vectors, ...      % Power Iteration flag
+    'OrthogonalIteration_G_nullspace_vectors', OrthogonalIteration_G_nullspace_vectors, ...      % Orthogonal Iteration flag
     'M', M, ...
     'FFT_interpolation', FFT_interpolation, ...
     'interp_zp', interp_zp, ...
