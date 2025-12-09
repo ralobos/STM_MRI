@@ -1,4 +1,4 @@
-# Spatiotemporal Maps (STM) Computation and Reconstruction Software v1.0
+# Spatiotemporal Map (STM) Computation and Reconstruction Software v1.0
 
 ## Overview
 
@@ -6,7 +6,9 @@ This MATLAB software provides examples of the reconstruction framework proposed 
 
 ## Notes
 
-The reconstruction in the provided examples uses a simple Tikhonov-regularized model-based approach using STMs. However, once STMs are computed, more advanced reconstruction approaches or regularizers could be used. 
+- The reconstruction in the provided examples uses a simple Tikhonov-regularized model-based approach using STMs. However, once STMs are computed, more advanced reconstruction approaches or regularizers could be used.
+- The code for STM computation is based on the PISCO software for sensitivity map estimation: https://github.com/ralobos/PISCO.git
+- 3D examples will be provided soon.
 
 ## Contents
 
