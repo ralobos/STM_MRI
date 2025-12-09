@@ -1,4 +1,4 @@
-%% SPATIOTEMPORAL MAPS RECONSTRUCTION EXAMPLE
+%% SPATIOTEMPORAL MAP RECONSTRUCTION EXAMPLE
 %
 % This script performs reconstruction of 2D multichannel retrospectively
 % undersampled dynamic MRI data using spatiotemporal maps (STM) computed
